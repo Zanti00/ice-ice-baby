@@ -30,7 +30,7 @@ windAudio.loop = true;
 windAudio.volume = 1.0;
 
 export default function GamePage() {
-  const [health, setHealth] = useState(100);
+  const [health, setHealth] = useState(500);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isFlashbang, setIsFlashbang] = useState(false);
   const [showCongrats, setShowCongrats] = useState(false);
@@ -82,11 +82,11 @@ export default function GamePage() {
   // Sync presence periodically and on hit
   const syncPresence = useCallback(
     (currentHealth: number) => {
-      if (currentHealth > 0 && currentHealth < 100) {
+      if (currentHealth > 0 && currentHealth < 500) {
         track({
           nickname: nickname,
           elapsedTime: latestElapsedTime.current,
-          clickCount: 100 - currentHealth,
+          clickCount: 500 - currentHealth,
         });
       }
     },
@@ -143,7 +143,7 @@ export default function GamePage() {
 
   const handleHit = useCallback(() => {
     if (health > 0 && !showCongrats) {
-      if (health === 100) {
+      if (health === 500) {
         setIsPlaying(true);
       }
 
@@ -155,7 +155,7 @@ export default function GamePage() {
         playShatterSound();
         syncPresence(0);
         setTimeout(() => untrack(), 500);
-      } else if (newHealth === 66 || newHealth === 33) {
+      } else if (newHealth === 333 || newHealth === 167) {
         playCrackSound();
         syncPresence(newHealth); // Immediate lobby update on every hit
       } else {
@@ -226,7 +226,7 @@ export default function GamePage() {
   }, [untrack]);
 
   const resetGame = () => {
-    setHealth(100);
+    setHealth(500);
     setElapsedTime(0);
     setIsPlaying(false);
     setShowCongrats(false);
@@ -239,9 +239,9 @@ export default function GamePage() {
   let imageSrc = "/ice-1.png";
   if (health === 0) {
     imageSrc = "/ice-4.png";
-  } else if (health <= 33) {
+  } else if (health <= 165) {
     imageSrc = "/ice-3.png";
-  } else if (health <= 66) {
+  } else if (health <= 330) {
     imageSrc = "/ice-2.png";
   }
 
@@ -372,7 +372,7 @@ export default function GamePage() {
           </div>
 
           <div className="health-bar-container">
-            <div className="health-bar" style={{ width: `${health}%` }}></div>
+            <div className="health-bar" style={{ width: `${(health / 500) * 100}%` }}></div>
           </div>
           <div
             className="timer-display"
